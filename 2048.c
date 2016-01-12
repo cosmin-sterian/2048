@@ -507,15 +507,15 @@ int printmenu(WINDOW *fereastra, int *resume)
       int k=strlen("NEW GAME")+4;
       start_color();
       init_pair(20,COLOR_RED,COLOR_BLACK);
-      for(i=(maxy-9)/2-1;i<(maxy-9)/2+9;i++)
+      for(i=(maxy-9)/2-1;i<(maxy-9)/2+8;i++)
       {
             mvwprintw(fereastra,i,(maxx-k)/2-1,"*");
             mvwprintw(fereastra,i,(maxx-k)/2-1+k,"*");
       }
-      for(i=(maxx-k)/2-1;i<(maxx-k)/2-1+k;i++)
+      for(i=(maxx-k)/2-1;i<(maxx-k)/2+k;i++)
       {
             mvwprintw(fereastra,(maxy-9)/2-1,i,"*");
-            mvwprintw(fereastra,(maxy-9)/2+8,i,"*");
+            mvwprintw(fereastra,(maxy-9)/2+7,i,"*");
       }
       wattron(fereastra, A_BOLD | A_STANDOUT);
       mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
