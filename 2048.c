@@ -5,6 +5,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include "dont_open_till_Christmas.h"
+#include "menuanim.h"
 
 #define WAIT 5
 
@@ -502,6 +503,7 @@ void printtimer(WINDOW *fereastra, time_t *timp)
 int printmenu(WINDOW *fereastra, int *resume)
 {
       wclear(fereastra);
+      printmenu2048(fereastra);
       int maxx, maxy, putere=1, c, i=1;
       getmaxyx(fereastra,maxy,maxx);
       int k=strlen("NEW GAME")+4;
@@ -604,6 +606,8 @@ int printmenu(WINDOW *fereastra, int *resume)
                   switch(i)
                   {
                         case 1:
+                              moveall(fereastra);
+                              sleep(1);
                               return 1;
                               break;
                         case 2:
@@ -792,6 +796,7 @@ new_game:
     printscoreboard(fereastra,scor);
     printtimer(fereastra,timp);
     printcurrenttime(fereastra);
+    printcorners(fereastra);
     legenda(fereastra);
     wrefresh(fereastra);
     while(putere)
@@ -881,6 +886,7 @@ new_game:
         printscoreboard(fereastra,scor);
         printtimer(fereastra,timp);
         printcurrenttime(fereastra);
+        printcorners(fereastra);
         legenda(fereastra);
         wrefresh(fereastra);
         if(t==0)
@@ -893,6 +899,7 @@ new_game:
              afisare(a,fereastra);
              printscoreboard(fereastra,scor);
              printcurrenttime(fereastra);
+             printcorners(fereastra);
              legenda(fereastra);
              *timp=time(NULL);
              printtimer(fereastra,timp);
