@@ -3,8 +3,6 @@
 #include <string.h>
 #include <time.h>
 #include <ncurses.h>
-//#include <signal.h>
-
 #include <unistd.h>
 #include "dont_open_till_Christmas.h"
 
@@ -726,8 +724,6 @@ void doundo(undo *v, int **b, int *scor)
             v->u=realloc(v->u,(v->n)*sizeof(table));
       }
 }
-
-//void printbeforewin(WINDOW *fereastra);
 
 int main()
 {
