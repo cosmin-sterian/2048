@@ -248,6 +248,8 @@ int checkwon(int **a)
     return 0;
 }
 
+void printcurrenttime(WINDOW *fereastra);
+
 int printwon(WINDOW *fereastra, int **a)
 {
     int x,y,maxy,maxx;
@@ -269,6 +271,8 @@ int printwon(WINDOW *fereastra, int **a)
    while(y!='d' && y!='n')
    {
          y=wgetch(fereastra);
+         printcurrenttime(fereastra);
+         wrefresh(fereastra);
    }
    if(y=='d')
    {
@@ -916,17 +920,20 @@ new_game:
             rotire(a);
         }
         if(k==4)
+        {
             switch(printover(fereastra))
             {
                   case 'q':
                         putere=0;
                         break;
                   case 'u':
+                        *timp=time(NULL);
                         doundo(v,a,scor);
                         break;
                   default:
                         break;
             }
+      }
       if(putere==0)
       {
             putere=1;
