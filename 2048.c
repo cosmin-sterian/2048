@@ -279,7 +279,10 @@ int printwon(WINDOW *fereastra, int **a)
          return 1;
    }
    else
+   {
+      movealltomenu(fereastra);
       return 0;
+      }
 }
 
 int checkover(int **a)
@@ -927,6 +930,7 @@ new_game:
             switch(printover(fereastra))
             {
                   case 'q':
+                  movealltomenu(fereastra);
                         putere=0;
                         break;
                   case 'u':
@@ -957,6 +961,7 @@ new_game:
      }
     }
     quit_game:
+    afterexit(fereastra);
     wclear(fereastra);
     delwin(fereastra);
     endwin();
