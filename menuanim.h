@@ -309,12 +309,8 @@ void afterexit(WINDOW *fereastra)
             usleep(1000*100);
       }
       curs_set(TRUE);
-      //j=maxx-1;
       for(i=maxy-1;i>=0;i--)
       {
-            //if(j<0)
-                  //j=maxx-1;
-            //wmove(fereastra,i,j);
             for(j=maxx-1;j>=0;j--)
             {
                   wmove(fereastra,i,j);
@@ -322,17 +318,6 @@ void afterexit(WINDOW *fereastra)
                   wrefresh(fereastra);
                   usleep(1000);
             }
-            /*j=maxx-1;
-            while(j>=0)
-            {
-                  wmove(fereastra,i,j);
-                  mvwprintw(fereastra,i,j," ");
-                  wrefresh(fereastra);
-                  usleep(50);
-                  j--;
-            }*/
-            //wrefresh(fereastra);
-            //usleep(1000*50);
       }
 
       free(v);

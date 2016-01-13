@@ -638,23 +638,24 @@ void legenda(WINDOW *fereastra)
       int maxy,maxx;
       getmaxyx(fereastra,maxy,maxx);
       int i;
-      for(i=1;i<=7;i++)
+      for(i=1;i<=8;i++)
       {
             mvwprintw(fereastra,maxy-i,(maxx-strlen("W,A,S,D / sageti = mutari"))/2-1,"*");
             mvwprintw(fereastra,maxy-i,(maxx-strlen("W,A,S,D / sageti = mutari"))/2+strlen("W,A,S,D / sageti = mutari"),"*");
       }
       for(i=(maxx-strlen("W,A,S,D / sageti = mutari"))/2-1;i<(maxx-strlen("W,A,S,D / sageti = mutari"))/2+strlen("W,A,S,D / sageti = mutari");i++)
       {
-            mvwprintw(fereastra,maxy-7,i,"*");
+            mvwprintw(fereastra,maxy-8,i,"*");
             mvwprintw(fereastra,maxy-1,i,"*");
       }
       wattron(fereastra, A_UNDERLINE);
-      mvwprintw(fereastra,maxy-6,(maxx-strlen("LEGENDA"))/2-1,"LEGENDA");
+      mvwprintw(fereastra,maxy-7,(maxx-strlen("LEGENDA"))/2-1,"LEGENDA");
       wattroff(fereastra, A_UNDERLINE);
-      mvwprintw(fereastra,maxy-5,(maxx-strlen("W,A,S,D / sageti = mutari"))/2,"W,A,S,D / sageti = mutari");
-      mvwprintw(fereastra,maxy-4,(maxx-strlen("U = Undo"))/2-1,"U = Undo");
-      mvwprintw(fereastra,maxy-3,(maxx-strlen("F5 = Quicksave"))/2-1,"F5 = Quicksave");
-      mvwprintw(fereastra,maxy-2,(maxx-strlen("F9 = Quickload"))/2-1,"F9 = Quickload");
+      mvwprintw(fereastra,maxy-6,(maxx-strlen("W,A,S,D / sageti = mutari"))/2,"W,A,S,D / sageti = mutari");
+      mvwprintw(fereastra,maxy-5,(maxx-strlen("U = Undo"))/2-1,"U = Undo");
+      mvwprintw(fereastra,maxy-4,(maxx-strlen("F5 = Quicksave"))/2-1,"F5 = Quicksave");
+      mvwprintw(fereastra,maxy-3,(maxx-strlen("F9 = Quickload"))/2-1,"F9 = Quickload");
+      mvwprintw(fereastra,maxy-2,(maxx-strlen("T = CHEAT(pentru testing)"))/2,"T = CHEAT(pentru testing)");
       wrefresh(fereastra);
 }
 
@@ -675,7 +676,7 @@ void quicksave(int **a, int *scor)
       fclose(mem);
 }
 
-int quickload(WINDOW *fereastra, int **a, int *scor)
+void quickload(WINDOW *fereastra, int **a, int *scor, undo *v)
 {
       FILE *mem;
       mem=fopen("save.txt", "r");
@@ -698,8 +699,11 @@ int quickload(WINDOW *fereastra, int **a, int *scor)
             mvwprintw(fereastra,(maxy-6)/2+3,maxx-strlen("Apasati ENTER")-5,"Apasati ENTER");
             mvwprintw(fereastra,(maxy-6)/2+4,maxx-strlen("pentru continuare.")-1,"pentru continuare.");
             wrefresh(fereastra);
-            while((y=wgetch(fereastra))!=10);
-            return 0;
+            while((y=wgetch(fereastra))!=10)
+            {
+                  printcurrenttime(fereastra);
+            }
+            //return 0;
       }
       else
       {
@@ -709,7 +713,10 @@ int quickload(WINDOW *fereastra, int **a, int *scor)
                         fscanf(mem,"%d",&a[x][y]);
             }
             fscanf(mem,"%d",scor);
-            return 1;
+            fclose(mem);
+            v->n = 0;
+            v->u=realloc(v->u,0);
+            //return 1;
       }
 }
 
@@ -852,7 +859,7 @@ new_game:
             *timp = time(NULL);
             break;
       case KEY_F(9):
-            quickload(fereastra,a,scor);
+            quickload(fereastra,a,scor,v);
             *timp = time(NULL);
             break;
         case 'q':
@@ -873,13 +880,9 @@ new_game:
            }
             break;
         case 't':
+            *timp=time(NULL);
             a[0][3]=1024;
             a[0][2]=1024;
-            break;
-      case 'p':
-            addundo(v,a,scor);
-            n=doauto(a,scor,cleared,check);
-            *timp=time(NULL);
             break;
         case 'u':
                   doundo(v,a,scor);
