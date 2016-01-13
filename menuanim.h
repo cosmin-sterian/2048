@@ -251,3 +251,90 @@ void printmenu2048(WINDOW *fereastra)
       reprintp8(fereastra,(maxy-18)/2-2+10,(maxx-45)/2+30);
       col8off;
 }
+
+int checkempty(int *v, int *dim)
+{
+      int i;
+      for(i=0;i<*dim;i++)
+      {
+            if(v[i]==0)
+                  return 0;
+      }
+      return 1;
+}
+
+void afterexit(WINDOW *fereastra)
+{
+      int maxy,maxx;
+      getmaxyx(fereastra,maxy,maxx);
+      init_pair(31,COLOR_BLACK,COLOR_BLUE);
+      srand(time(NULL));
+      int i,j,r;
+      int *v=calloc(maxy,sizeof(int));
+      int *dim=calloc(1,sizeof(int));
+      *dim=maxy;
+      while(checkempty(v,dim)!=1)
+      {
+            r=rand()%(*dim);
+            while(v[r]==1)
+                  r=rand()%(*dim);
+            v[r]=1;
+            if(r==maxy/2)
+            {
+                  for(j=0;j<(maxx-strlen(" CYA ! "))/2;j++)
+                  {
+                        wattron(fereastra,COLOR_PAIR(31));
+                        mvwprintw(fereastra,r,j," ");
+                        wattroff(fereastra,COLOR_PAIR(31));
+                  }
+                  mvwprintw(fereastra,r,j," CYA ! ");
+                  for(j=j+strlen(" CYA ! ");j<maxx;j++)
+                  {
+                        wattron(fereastra,COLOR_PAIR(31));
+                        mvwprintw(fereastra,r,j," ");
+                        wattroff(fereastra,COLOR_PAIR(31));
+                  }
+            }
+            else
+            {
+                  for(j=0;j<maxx;j++)
+                  {
+                        wattron(fereastra,COLOR_PAIR(31));
+                        mvwprintw(fereastra,r,j," ");
+                        wattroff(fereastra,COLOR_PAIR(31));
+                        wrefresh(fereastra);
+                  }
+            }
+            wrefresh(fereastra);
+            usleep(1000*100);
+      }
+      curs_set(TRUE);
+      //j=maxx-1;
+      for(i=maxy-1;i>=0;i--)
+      {
+            //if(j<0)
+                  //j=maxx-1;
+            //wmove(fereastra,i,j);
+            for(j=maxx-1;j>=0;j--)
+            {
+                  wmove(fereastra,i,j);
+                  mvwprintw(fereastra,i,j," ");
+                  wrefresh(fereastra);
+                  usleep(1000);
+            }
+            /*j=maxx-1;
+            while(j>=0)
+            {
+                  wmove(fereastra,i,j);
+                  mvwprintw(fereastra,i,j," ");
+                  wrefresh(fereastra);
+                  usleep(50);
+                  j--;
+            }*/
+            //wrefresh(fereastra);
+            //usleep(1000*50);
+      }
+
+      free(v);
+      free(dim);
+}
