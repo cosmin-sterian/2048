@@ -9,15 +9,13 @@
 
 #define WAIT 5
 
-typedef struct table
-{
-    int a[4][4];
-    int scor;
+typedef struct table{
+      int a[4][4];
+      int scor;
 } table;
-typedef struct undo
-{
-    int n;
-    table *u;
+typedef struct undo{
+      int n;
+      table *u;
 } undo;
 
 int aleator(int **a)
@@ -65,12 +63,12 @@ int aleator(int **a)
 
 void newgame(int **a)
 {
-    int x,y;
-    for(x=0; x<4; x++)
-        for(y=0; y<4; y++)
-            a[x][y]=0;
-    aleator(a);
-    aleator(a);
+      int x,y;
+      for(x=0;x<4;x++)
+            for(y=0;y<4;y++)
+                  a[x][y]=0;
+      aleator(a);
+      aleator(a);
 }
 
 int stanga(int **a, int *scor, int *cleared, int *check)
@@ -104,9 +102,9 @@ int stanga(int **a, int *scor, int *cleared, int *check)
             {
                 a[x][y]=a[x][y]*2;
                 if(*check==0)
-                    *scor+=a[x][y];
+                  *scor+=a[x][y];
                 else
-                    *cleared=*cleared+1;
+                  *cleared=*cleared+1;
                 for(i=y+1; i<3; i++)
                 {
                     a[x][i]=a[x][i+1];
@@ -121,7 +119,7 @@ int stanga(int **a, int *scor, int *cleared, int *check)
 
 void afisare(int **a, WINDOW *fereastra)
 {
-    wclear(fereastra);
+    //wclear(fereastra);
     start_color();
     int x,y,i,j,k;
     getmaxyx(fereastra,i,j);
@@ -256,35 +254,35 @@ int printwon(WINDOW *fereastra, int **a)
 {
     int x,y,maxy,maxx;
     getmaxyx(fereastra,maxy,maxx);
-    for(x=1; x<=4; x++)
+    for(x=1;x<=4;x++)
     {
-        mvwprintw(fereastra,(maxy-4)/2-1+x,maxx-strlen("Ati ajuns la 2048! ")-2,"!");
-        mvwprintw(fereastra,(maxy-4)/2-1+x,maxx-1,"!");
-    }
-    for(x=maxx-strlen("Ati ajuns la 2048! ")-1; x<maxx-1; x++)
-    {
-        mvwprintw(fereastra,(maxy-4)/2,x,"~");
-        mvwprintw(fereastra,(maxy-4)/2+3,x,"~");
-    }
-    mvwprintw(fereastra,(maxy-4)/2+1,maxx-strlen("Ati ajuns la 2048! ")-1,"Ati ajuns la 2048!");
-    mvwprintw(fereastra,(maxy-4)/2+2,maxx-strlen("Continuati? (D/N)")-2,"Continuati? (D/N)");
-    wrefresh(fereastra);
-    y=wgetch(fereastra);
-    while(y!='d' && y!='n')
-    {
-        y=wgetch(fereastra);
-        printcurrenttime(fereastra);
-        wrefresh(fereastra);
-    }
-    if(y=='d')
-    {
-        return 1;
-    }
-    else
-    {
-        movealltomenu(fereastra);
-        return 0;
-    }
+          mvwprintw(fereastra,(maxy-4)/2-1+x,maxx-strlen("Ati ajuns la 2048! ")-2,"!");
+          mvwprintw(fereastra,(maxy-4)/2-1+x,maxx-1,"!");
+   }
+   for(x=maxx-strlen("Ati ajuns la 2048! ")-1;x<maxx-1;x++)
+   {
+         mvwprintw(fereastra,(maxy-4)/2,x,"~");
+         mvwprintw(fereastra,(maxy-4)/2+3,x,"~");
+   }
+   mvwprintw(fereastra,(maxy-4)/2+1,maxx-strlen("Ati ajuns la 2048! ")-1,"Ati ajuns la 2048!");
+   mvwprintw(fereastra,(maxy-4)/2+2,maxx-strlen("Continuati? (D/N)")-2,"Continuati? (D/N)");
+   wrefresh(fereastra);
+   y=wgetch(fereastra);
+   while(y!='d' && y!='n')
+   {
+         y=wgetch(fereastra);
+         printcurrenttime(fereastra);
+         wrefresh(fereastra);
+   }
+   if(y=='d')
+   {
+         return 1;
+   }
+   else
+   {
+      movealltomenu(fereastra);
+      return 0;
+      }
 }
 
 int checkover(int **a)
@@ -307,28 +305,28 @@ int checkover(int **a)
 
 void printcurrenttime(WINDOW *fereastra)
 {
-    int maxx,i;
-    getmaxyx(fereastra,i,maxx);
-    mvwprintw(fereastra,4,(maxx-strlen("00/00/2016 - 00:00:00"))/2-2,"+");
-    mvwprintw(fereastra,4,(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1,"+");
-    mvwprintw(fereastra,7,(maxx-strlen("00/00/2016 - 00:00:00"))/2-2,"+");
-    mvwprintw(fereastra,7,(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1,"+");
-    for(i=5; i<=6; i++)
-    {
-        mvwprintw(fereastra,i,(maxx-strlen("00/00/2016 - 00:00:00"))/2-2,"|");
-        mvwprintw(fereastra,i,(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1,"|");
-    }
-    for(i=(maxx-strlen("00/00/2016 - 00:00:00"))/2-1; i<(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1; i++)
-    {
-        mvwprintw(fereastra,4,i,"-");
-        mvwprintw(fereastra,7,i,"-");
-    }
-    mvwprintw(fereastra,5,(maxx-strlen("DATA - ORA"))/2,"DATA - ORA");
-    time_t timp;
-    struct tm *timp_str;
-    time(&timp);
-    timp_str = localtime(&timp);
-    mvwprintw(fereastra,6,(maxx-strlen("00/00/2016 - 00:00:00"))/2,"%2d/%02d/%4d - %02d:%02d:%02d",timp_str->tm_mday,timp_str->tm_mon+1,timp_str->tm_year+1900,timp_str->tm_hour,timp_str->tm_min,timp_str->tm_sec);
+      int maxx,i;
+      getmaxyx(fereastra,i,maxx);
+      mvwprintw(fereastra,4,(maxx-strlen("00/00/2016 - 00:00:00"))/2-2,"+");
+      mvwprintw(fereastra,4,(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1,"+");
+      mvwprintw(fereastra,7,(maxx-strlen("00/00/2016 - 00:00:00"))/2-2,"+");
+      mvwprintw(fereastra,7,(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1,"+");
+      for(i=5;i<=6;i++)
+      {
+            mvwprintw(fereastra,i,(maxx-strlen("00/00/2016 - 00:00:00"))/2-2,"|");
+            mvwprintw(fereastra,i,(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1,"|");
+      }
+      for(i=(maxx-strlen("00/00/2016 - 00:00:00"))/2-1;i<(maxx-strlen("00/00/2016 - 00:00:00"))/2+strlen("00/00/2016 - 00:00:00")+1;i++)
+      {
+            mvwprintw(fereastra,4,i,"-");
+            mvwprintw(fereastra,7,i,"-");
+      }
+      mvwprintw(fereastra,5,(maxx-strlen("DATA - ORA"))/2,"DATA - ORA");
+      time_t timp;
+      struct tm *timp_str;
+      time(&timp);
+      timp_str = localtime(&timp);
+      mvwprintw(fereastra,6,(maxx-strlen("00/00/2016 - 00:00:00"))/2,"%2d/%02d/%4d - %02d:%02d:%02d",timp_str->tm_mday,timp_str->tm_mon+1,timp_str->tm_year+1900,timp_str->tm_hour,timp_str->tm_min,timp_str->tm_sec);
 }
 
 int printover(WINDOW *fereastra)
@@ -338,32 +336,32 @@ int printover(WINDOW *fereastra)
     start_color();
     init_pair(21,COLOR_RED,COLOR_BLACK);
     wattron(fereastra,COLOR_PAIR(21));
-    for(x=1; x<=8; x++)
+    for(x=1;x<=8;x++)
     {
-        mvwprintw(fereastra,(maxy-8)/2-1+x,maxx-strlen("Apasati Q pentru a")-4,"x");
-        mvwprintw(fereastra,(maxy-8)/2-1+x,maxx-1,"x");
-    }
-    for(x=maxx-strlen("Apasati Q pentru a")-3; x<maxx-1; x++)
-    {
-        mvwprintw(fereastra,(maxy-8)/2,x,"x");
-        mvwprintw(fereastra,(maxy-8)/2+7,x,"x");
-    }
-    mvwprintw(fereastra,(maxy-8)/2+1,maxx-strlen("GAME OVER!")-6,"GAME OVER!");
-    mvwprintw(fereastra,(maxy-8)/2+2,maxx-strlen("Apasati Q pentru a")-2,"Apasati Q pentru a");
-    mvwprintw(fereastra,(maxy-8)/2+3,maxx-strlen("reveni la")-7,"reveni la");
-    mvwprintw(fereastra,(maxy-8)/2+4,maxx-strlen("meniul principal.")-2,"meniul principal,");
-    mvwprintw(fereastra,(maxy-8)/2+5,maxx-strlen("sau U")-9,"sau U");
-    mvwprintw(fereastra,(maxy-8)/2+6,maxx-strlen("pentru UNDO.")-5,"pentru UNDO.");
-    wattroff(fereastra,COLOR_PAIR(21));
-    wrefresh(fereastra);
-    y=wgetch(fereastra);
-    while(y!='q' && y!='u')
-    {
-        y=wgetch(fereastra);
-        printcurrenttime(fereastra);
-        wrefresh(fereastra);
-    }
-    return y;
+          mvwprintw(fereastra,(maxy-8)/2-1+x,maxx-strlen("Apasati Q pentru a")-4,"x");
+          mvwprintw(fereastra,(maxy-8)/2-1+x,maxx-1,"x");
+   }
+   for(x=maxx-strlen("Apasati Q pentru a")-3;x<maxx-1;x++)
+   {
+         mvwprintw(fereastra,(maxy-8)/2,x,"x");
+         mvwprintw(fereastra,(maxy-8)/2+7,x,"x");
+   }
+   mvwprintw(fereastra,(maxy-8)/2+1,maxx-strlen("GAME OVER!")-6,"GAME OVER!");
+   mvwprintw(fereastra,(maxy-8)/2+2,maxx-strlen("Apasati Q pentru a")-2,"Apasati Q pentru a");
+   mvwprintw(fereastra,(maxy-8)/2+3,maxx-strlen("reveni la")-7,"reveni la");
+   mvwprintw(fereastra,(maxy-8)/2+4,maxx-strlen("meniul principal.")-2,"meniul principal,");
+   mvwprintw(fereastra,(maxy-8)/2+5,maxx-strlen("sau U")-9,"sau U");
+   mvwprintw(fereastra,(maxy-8)/2+6,maxx-strlen("pentru UNDO.")-5,"pentru UNDO.");
+   wattroff(fereastra,COLOR_PAIR(21));
+   wrefresh(fereastra);
+   y=wgetch(fereastra);
+   while(y!='q' && y!='u')
+   {
+         y=wgetch(fereastra);
+         printcurrenttime(fereastra);
+         wrefresh(fereastra);
+   }
+   return y;
 }
 
 void printscoreboard(WINDOW *fereastra, int *scor)
@@ -387,362 +385,362 @@ void printscoreboard(WINDOW *fereastra, int *scor)
 
 void copiere(int **a, int **b)
 {
-    int x,y;
-    for(x=0; x<4; x++)
-        for(y=0; y<4; y++)
-            b[x][y]=a[x][y];
+      int x,y;
+      for(x=0;x<4;x++)
+            for(y=0;y<4;y++)
+                  b[x][y]=a[x][y];
 }
 
 int doauto(int **a, int *scor, int *cleared, int *check)
 {
-    int x,y=0,n=0,k=0,nf=0;
-    *cleared=0;
-    int **b=malloc(4*sizeof(int*));
-    for(x=0; x<4; x++)
-    {
-        b[x]=malloc(4*sizeof(int));
-    }
-    copiere(a,b);
-    *check=1;
-    n=stanga(b,scor,cleared,check);
-    if(n==1)
-        nf=1;
-    if(*cleared>k)
-    {
-        k=*cleared;
-        y=1;
-    }
-    copiere(a,b);
-    n=dreapta(b,scor,cleared,check);
-    if(n==1)
-        nf=1;
-    if(*cleared>k)
-    {
-        k=*cleared;
-        y=2;
-    }
-    copiere(a,b);
-    n=sus(b,scor,cleared,check);
-    if(n==1)
-        nf=1;
-    if(*cleared>k)
-    {
-        k=*cleared;
-        y=3;
-    }
-    copiere(a,b);
-    n=jos(b,scor,cleared,check);
-    if(n==1)
-        nf=1;
-    if(*cleared>k)
-    {
-        k=*cleared;
-        y=4;
-    }
-    *check=0;
-    switch(y)
-    {
-    case 1:
-        stanga(a,scor,cleared,check);
-        break;
-    case 2:
-        dreapta(a,scor,cleared,check);
-        break;
-    case 3:
-        sus(a,scor,cleared,check);
-        break;
-    case 4:
-        jos(a,scor,cleared,check);
-        break;
-    default:
-        if(nf==1)
-        {
-            copiere(a,b);
-            if(stanga(b,scor,cleared,check)==1)
-            {
-                stanga(a,scor,cleared,check);
-                break;
-            }
-            copiere(a,b);
-            if(dreapta(b,scor,cleared,check)==1)
-            {
-                dreapta(a,scor,cleared,check);
-                break;
-            }
-            copiere(a,b);
-            if(sus(b,scor,cleared,check)==1)
-            {
-                sus(a,scor,cleared,check);
-                break;
-            }
-            copiere(a,b);
-            if(jos(b,scor,cleared,check)==1)
-            {
-                jos(a,scor,cleared,check);
-                break;
-            }
-        }
-        break;
-    }
-    for(x=0; x<4; x++)
-        free(b[x]);
-    free(b);
-    return nf;
+      int x,y=0,n=0,k=0,nf=0;
+      *cleared=0;
+      int **b=malloc(4*sizeof(int*));
+      for(x=0;x<4;x++)
+      {
+            b[x]=malloc(4*sizeof(int));
+      }
+      copiere(a,b);
+      *check=1;
+      n=stanga(b,scor,cleared,check);
+      if(n==1)
+            nf=1;
+      if(*cleared>k)
+      {
+            k=*cleared;
+            y=1;
+      }
+      copiere(a,b);
+      n=dreapta(b,scor,cleared,check);
+      if(n==1)
+            nf=1;
+      if(*cleared>k)
+      {
+            k=*cleared;
+            y=2;
+      }
+      copiere(a,b);
+      n=sus(b,scor,cleared,check);
+      if(n==1)
+            nf=1;
+      if(*cleared>k)
+      {
+            k=*cleared;
+            y=3;
+      }
+      copiere(a,b);
+      n=jos(b,scor,cleared,check);
+      if(n==1)
+            nf=1;
+      if(*cleared>k)
+      {
+            k=*cleared;
+            y=4;
+      }
+      *check=0;
+      switch(y)
+      {
+            case 1:
+                  stanga(a,scor,cleared,check);
+                  break;
+            case 2:
+                  dreapta(a,scor,cleared,check);
+                  break;
+            case 3:
+                  sus(a,scor,cleared,check);
+                  break;
+            case 4:
+                  jos(a,scor,cleared,check);
+                  break;
+            default:
+                  if(nf==1)
+                  {
+                        copiere(a,b);
+                        if(stanga(b,scor,cleared,check)==1)
+                        {
+                              stanga(a,scor,cleared,check);
+                              break;
+                        }
+                        copiere(a,b);
+                        if(dreapta(b,scor,cleared,check)==1)
+                        {
+                              dreapta(a,scor,cleared,check);
+                              break;
+                        }
+                        copiere(a,b);
+                        if(sus(b,scor,cleared,check)==1)
+                        {
+                              sus(a,scor,cleared,check);
+                              break;
+                        }
+                        copiere(a,b);
+                        if(jos(b,scor,cleared,check)==1)
+                        {
+                              jos(a,scor,cleared,check);
+                              break;
+                        }
+                  }
+                  break;
+      }
+      for(x=0;x<4;x++)
+            free(b[x]);
+      free(b);
+      return nf;
 }
 
 void printtimer(WINDOW *fereastra, time_t *timp)
 {
-    int maxy,i;
-    getmaxyx(fereastra,maxy,i);
-    for(i=1; i<=4; i++)
-    {
-        mvwprintw(fereastra,(maxy-4)/2-1+i,0,"*");
-        mvwprintw(fereastra,(maxy-4)/2-1+i,strlen("Timp ramas: 00s")+2,"*");
-    }
-    for(i=0; i<strlen("Timp ramas: 00s")+2; i++)
-    {
-        mvwprintw(fereastra,(maxy-4)/2,i,"*");
-        mvwprintw(fereastra,(maxy-4)/2+3,i,"*");
-    }
-    mvwprintw(fereastra,(maxy-4)/2+1,1,"Auto: %ds",WAIT);
-    mvwprintw(fereastra,(maxy-4)/2+2,1,"Timp ramas: %2ds",WAIT-(time(NULL)-*timp));
-    wrefresh(fereastra);
+      int maxy,i;
+      getmaxyx(fereastra,maxy,i);
+      for(i=1;i<=4;i++)
+      {
+            mvwprintw(fereastra,(maxy-4)/2-1+i,0,"*");
+            mvwprintw(fereastra,(maxy-4)/2-1+i,strlen("Timp ramas: 00s")+2,"*");
+      }
+      for(i=0;i<strlen("Timp ramas: 00s")+2;i++)
+      {
+            mvwprintw(fereastra,(maxy-4)/2,i,"*");
+            mvwprintw(fereastra,(maxy-4)/2+3,i,"*");
+      }
+      mvwprintw(fereastra,(maxy-4)/2+1,1,"Auto: %ds",WAIT);
+      mvwprintw(fereastra,(maxy-4)/2+2,1,"Timp ramas: %2ds",WAIT-(time(NULL)-*timp));
+      wrefresh(fereastra);
 }
 
 int printmenu(WINDOW *fereastra, int *resume)
 {
-    wclear(fereastra);
-    printmenu2048(fereastra);
-    int maxx, maxy, putere=1, c, i=1;
-    getmaxyx(fereastra,maxy,maxx);
-    int k=strlen("NEW GAME")+4;
-    start_color();
-    init_pair(20,COLOR_RED,COLOR_BLACK);
-    for(i=(maxy-9)/2-1; i<(maxy-9)/2+8; i++)
-    {
-        mvwprintw(fereastra,i,(maxx-k)/2-1,"*");
-        mvwprintw(fereastra,i,(maxx-k)/2-1+k,"*");
-    }
-    for(i=(maxx-k)/2-1; i<(maxx-k)/2+k; i++)
-    {
-        mvwprintw(fereastra,(maxy-9)/2-1,i,"*");
-        mvwprintw(fereastra,(maxy-9)/2+7,i,"*");
-    }
-    wattron(fereastra, A_BOLD | A_STANDOUT);
-    mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
-    wattroff(fereastra, A_BOLD | A_STANDOUT);
-    if(*resume==0)
-    {
-        wattron(fereastra, COLOR_PAIR(20));
-        mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-        wattroff(fereastra, COLOR_PAIR(20));
-    }
-    else
-        mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-    mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
-    i=1;
-    while(putere)
-    {
-        wrefresh(fereastra);
-        c=wgetch(fereastra);
-        switch(c)
-        {
-        case 'w':
-        case KEY_UP:
-            if(i>1)
-                i--;
-            if(i==2 && *resume==0)
-                i--;
-            break;
-        case 's':
-        case KEY_DOWN:
-            if(i<3)
-                i++;
-            if(i==2 && *resume==0)
-                i++;
-            break;
-        case 10:
-            putere=0;
-            break;
-        default:
-            break;
-        }
-        switch(i)
-        {
-        case 1:
-            wattron(fereastra, A_BOLD | A_STANDOUT);
-            mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
-            wattroff(fereastra, A_BOLD | A_STANDOUT);
-            mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
-            if(*resume==1)
-                mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-            else
-            {
-                wattron(fereastra, COLOR_PAIR(20));
-                mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-                wattroff(fereastra, COLOR_PAIR(20));
-            }
-            break;
-        case 2:
-        {
-            wattron(fereastra, A_BOLD | A_STANDOUT);
+      wclear(fereastra);
+      printmenu2048(fereastra);
+      int maxx, maxy, putere=1, c, i=1;
+      getmaxyx(fereastra,maxy,maxx);
+      int k=strlen("NEW GAME")+4;
+      start_color();
+      init_pair(20,COLOR_RED,COLOR_BLACK);
+      for(i=(maxy-9)/2-1;i<(maxy-9)/2+8;i++)
+      {
+            mvwprintw(fereastra,i,(maxx-k)/2-1,"*");
+            mvwprintw(fereastra,i,(maxx-k)/2-1+k,"*");
+      }
+      for(i=(maxx-k)/2-1;i<(maxx-k)/2+k;i++)
+      {
+            mvwprintw(fereastra,(maxy-9)/2-1,i,"*");
+            mvwprintw(fereastra,(maxy-9)/2+7,i,"*");
+      }
+      wattron(fereastra, A_BOLD | A_STANDOUT);
+      mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
+      wattroff(fereastra, A_BOLD | A_STANDOUT);
+      if(*resume==0)
+      {
+            wattron(fereastra, COLOR_PAIR(20));
             mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-            wattroff(fereastra, A_BOLD | A_STANDOUT);
-            mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
-            mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
-            break;
-        }
-        case 3:
-            wattron(fereastra, A_BOLD | A_STANDOUT);
-            mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
-            wattroff(fereastra, A_BOLD | A_STANDOUT);
-            mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
-            if(*resume==1)
-                mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-            else
+            wattroff(fereastra, COLOR_PAIR(20));
+      }
+      else
+      mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
+      mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
+      i=1;
+      while(putere)
+      {
+            wrefresh(fereastra);
+            c=wgetch(fereastra);
+            switch(c)
             {
-                wattron(fereastra, COLOR_PAIR(20));
-                mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
-                wattroff(fereastra, COLOR_PAIR(20));
+                  case 'w':
+                  case KEY_UP:
+                              if(i>1)
+                                    i--;
+                              if(i==2 && *resume==0)
+                                    i--;
+                              break;
+                  case 's':
+                  case KEY_DOWN:
+                              if(i<3)
+                                    i++;
+                              if(i==2 && *resume==0)
+                                    i++;
+                              break;
+                  case 10:
+                              putere=0;
+                              break;
+                  default:
+                        break;
             }
-            break;
-        default:
-            break;
-        }
-        wrefresh(fereastra);
-        if(putere==0)
-        {
             switch(i)
             {
-            case 1:
-                moveall(fereastra);
-                usleep(1000*50);
-                return 1;
-                break;
-            case 2:
-                moveall(fereastra);
-                usleep(1000*50);
-                return 2;
-                break;
-            case 3:
-                return 3;
-                break;
-            default:
-                break;
+                  case 1:
+                        wattron(fereastra, A_BOLD | A_STANDOUT);
+                        mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
+                        wattroff(fereastra, A_BOLD | A_STANDOUT);
+                        mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
+                        if(*resume==1)
+                              mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
+                        else
+                        {
+                              wattron(fereastra, COLOR_PAIR(20));
+                              mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
+                              wattroff(fereastra, COLOR_PAIR(20));
+                        }
+                        break;
+                  case 2:
+                        {
+                              wattron(fereastra, A_BOLD | A_STANDOUT);
+                              mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
+                              wattroff(fereastra, A_BOLD | A_STANDOUT);
+                              mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
+                              mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
+                              break;
+                        }
+                  case 3:
+                        wattron(fereastra, A_BOLD | A_STANDOUT);
+                        mvwprintw(fereastra,(maxy-9)/2+5,(maxx-strlen("QUIT"))/2-1,"QUIT");
+                        wattroff(fereastra, A_BOLD | A_STANDOUT);
+                        mvwprintw(fereastra,(maxy-9)/2+1,(maxx-k)/2+1,"NEW GAME");
+                        if(*resume==1)
+                        mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
+                        else
+                        {
+                              wattron(fereastra, COLOR_PAIR(20));
+                              mvwprintw(fereastra,(maxy-9)/2+3,(maxx-strlen("RESUME"))/2-1,"RESUME");
+                              wattroff(fereastra, COLOR_PAIR(20));
+                        }
+                        break;
+                  default:
+                        break;
             }
-        }
-    }
-    return 0;
+            wrefresh(fereastra);
+            if(putere==0)
+            {
+                  switch(i)
+                  {
+                        case 1:
+                              moveall(fereastra);
+                              usleep(1000*50);
+                              return 1;
+                              break;
+                        case 2:
+                              moveall(fereastra);
+                              usleep(1000*50);
+                              return 2;
+                              break;
+                        case 3:
+                              return 3;
+                              break;
+                        default:
+                              break;
+                  }
+            }
+      }
+      return 0;
 }
 
 void legenda(WINDOW *fereastra)
 {
-    int maxy,maxx;
-    getmaxyx(fereastra,maxy,maxx);
-    int i;
-    for(i=1; i<=8; i++)
-    {
-        mvwprintw(fereastra,maxy-i,(maxx-strlen("W,A,S,D / sageti = mutari"))/2-1,"*");
-        mvwprintw(fereastra,maxy-i,(maxx-strlen("W,A,S,D / sageti = mutari"))/2+strlen("W,A,S,D / sageti = mutari"),"*");
-    }
-    for(i=(maxx-strlen("W,A,S,D / sageti = mutari"))/2-1; i<(maxx-strlen("W,A,S,D / sageti = mutari"))/2+strlen("W,A,S,D / sageti = mutari"); i++)
-    {
-        mvwprintw(fereastra,maxy-8,i,"*");
-        mvwprintw(fereastra,maxy-1,i,"*");
-    }
-    wattron(fereastra, A_UNDERLINE);
-    mvwprintw(fereastra,maxy-7,(maxx-strlen("LEGENDA"))/2-1,"LEGENDA");
-    wattroff(fereastra, A_UNDERLINE);
-    mvwprintw(fereastra,maxy-6,(maxx-strlen("W,A,S,D / sageti = mutari"))/2,"W,A,S,D / sageti = mutari");
-    mvwprintw(fereastra,maxy-5,(maxx-strlen("U = Undo"))/2-1,"U = Undo");
-    mvwprintw(fereastra,maxy-4,(maxx-strlen("F5 = Quicksave"))/2-1,"F5 = Quicksave");
-    mvwprintw(fereastra,maxy-3,(maxx-strlen("F9 = Quickload"))/2-1,"F9 = Quickload");
-    mvwprintw(fereastra,maxy-2,(maxx-strlen("T = CHEAT(pentru testing)"))/2,"T = CHEAT(pentru testing)");
-    wrefresh(fereastra);
+      int maxy,maxx;
+      getmaxyx(fereastra,maxy,maxx);
+      int i;
+      for(i=1;i<=8;i++)
+      {
+            mvwprintw(fereastra,maxy-i,(maxx-strlen("W,A,S,D / sageti = mutari"))/2-1,"*");
+            mvwprintw(fereastra,maxy-i,(maxx-strlen("W,A,S,D / sageti = mutari"))/2+strlen("W,A,S,D / sageti = mutari"),"*");
+      }
+      for(i=(maxx-strlen("W,A,S,D / sageti = mutari"))/2-1;i<(maxx-strlen("W,A,S,D / sageti = mutari"))/2+strlen("W,A,S,D / sageti = mutari");i++)
+      {
+            mvwprintw(fereastra,maxy-8,i,"*");
+            mvwprintw(fereastra,maxy-1,i,"*");
+      }
+      wattron(fereastra, A_UNDERLINE);
+      mvwprintw(fereastra,maxy-7,(maxx-strlen("LEGENDA"))/2-1,"LEGENDA");
+      wattroff(fereastra, A_UNDERLINE);
+      mvwprintw(fereastra,maxy-6,(maxx-strlen("W,A,S,D / sageti = mutari"))/2,"W,A,S,D / sageti = mutari");
+      mvwprintw(fereastra,maxy-5,(maxx-strlen("U = Undo"))/2-1,"U = Undo");
+      mvwprintw(fereastra,maxy-4,(maxx-strlen("F5 = Quicksave"))/2-1,"F5 = Quicksave");
+      mvwprintw(fereastra,maxy-3,(maxx-strlen("F9 = Quickload"))/2-1,"F9 = Quickload");
+      mvwprintw(fereastra,maxy-2,(maxx-strlen("T = CHEAT(pentru testing)"))/2,"T = CHEAT(pentru testing)");
+      wrefresh(fereastra);
 }
 
 void quicksave(int **a, int *scor)
 {
-    FILE *mem;
-    mem=fopen("save.txt", "w");
-    int x, y;
-    for(x=0; x<4; x++)
-    {
-        for(y=0; y<4; y++)
-        {
-            fprintf(mem,"%d ",a[x][y]);
-        }
-        fprintf(mem,"\n");
-    }
-    fprintf(mem,"%d",*scor);
-    fclose(mem);
+      FILE *mem;
+      mem=fopen("save.txt", "w");
+      int x, y;
+      for(x=0;x<4;x++)
+      {
+            for(y=0;y<4;y++)
+            {
+                  fprintf(mem,"%d ",a[x][y]);
+            }
+            fprintf(mem,"\n");
+      }
+      fprintf(mem,"%d",*scor);
+      fclose(mem);
 }
 
 void quickload(WINDOW *fereastra, int **a, int *scor, undo *v)
 {
-    FILE *mem;
-    mem=fopen("save.txt", "r");
-    int x,y,maxy,maxx;
-    getmaxyx(fereastra,maxy,maxx);
-    if(mem == NULL)
-    {
-        for(x=1; x<=6; x++)
-        {
-            mvwprintw(fereastra,(maxy-6)/2-1+x,maxx-strlen("pentru continuare ")-2,"*");
-            mvwprintw(fereastra,(maxy-6)/2-1+x,maxx-1,"*");
-        }
-        for(x=maxx-strlen("pentru continuare. ")-1; x<maxx-1; x++)
-        {
-            mvwprintw(fereastra,(maxy-6)/2,x,"*");
-            mvwprintw(fereastra,(maxy-6)/2+5,x,"*");
-        }
-        mvwprintw(fereastra,(maxy-6)/2+1,maxx-strlen("Nu a fost gasita")-2,"Nu a fost gasita");
-        mvwprintw(fereastra,(maxy-6)/2+2,maxx-strlen("nicio salvare.")-4,"nicio salvare.");
-        mvwprintw(fereastra,(maxy-6)/2+3,maxx-strlen("Apasati ENTER")-5,"Apasati ENTER");
-        mvwprintw(fereastra,(maxy-6)/2+4,maxx-strlen("pentru continuare.")-1,"pentru continuare.");
-        wrefresh(fereastra);
-        while((y=wgetch(fereastra))!=10)
-        {
-            printcurrenttime(fereastra);
-        }
-    }
-    else
-    {
-        for(x=0; x<4; x++)
-        {
-            for(y=0; y<4; y++)
-                fscanf(mem,"%d",&a[x][y]);
-        }
-        fscanf(mem,"%d",scor);
-        fclose(mem);
-        v->n = 0;
-        v->u=realloc(v->u,0);
-    }
+      FILE *mem;
+      mem=fopen("save.txt", "r");
+      int x,y,maxy,maxx;
+      getmaxyx(fereastra,maxy,maxx);
+      if(mem == NULL)
+      {
+            for(x=1;x<=6;x++)
+            {
+                  mvwprintw(fereastra,(maxy-6)/2-1+x,maxx-strlen("pentru continuare ")-2,"*");
+                  mvwprintw(fereastra,(maxy-6)/2-1+x,maxx-1,"*");
+            }
+            for(x=maxx-strlen("pentru continuare. ")-1;x<maxx-1;x++)
+            {
+                  mvwprintw(fereastra,(maxy-6)/2,x,"*");
+                  mvwprintw(fereastra,(maxy-6)/2+5,x,"*");
+            }
+            mvwprintw(fereastra,(maxy-6)/2+1,maxx-strlen("Nu a fost gasita")-2,"Nu a fost gasita");
+            mvwprintw(fereastra,(maxy-6)/2+2,maxx-strlen("nicio salvare.")-4,"nicio salvare.");
+            mvwprintw(fereastra,(maxy-6)/2+3,maxx-strlen("Apasati ENTER")-5,"Apasati ENTER");
+            mvwprintw(fereastra,(maxy-6)/2+4,maxx-strlen("pentru continuare.")-1,"pentru continuare.");
+            wrefresh(fereastra);
+            while((y=wgetch(fereastra))!=10)
+            {
+                  printcurrenttime(fereastra);
+            }
+      }
+      else
+      {
+            for(x=0;x<4;x++)
+            {
+                  for(y=0;y<4;y++)
+                        fscanf(mem,"%d",&a[x][y]);
+            }
+            fscanf(mem,"%d",scor);
+            fclose(mem);
+            v->n = 0;
+            v->u=realloc(v->u,0);
+      }
 }
 
 void addundo(undo *v, int **b, int *scor)
 {
-    (v->n)++;
-    v->u=realloc(v->u,(v->n)*sizeof(table));
-    int x,y;
-    for(x=0; x<4; x++)
-        for(y=0; y<4; y++)
-            (v->u[v->n - 1].a[x][y])=b[x][y];
-    v->u[v->n -1].scor=*scor;
+      (v->n)++;
+      v->u=realloc(v->u,(v->n)*sizeof(table));
+      int x,y;
+      for(x=0;x<4;x++)
+            for(y=0;y<4;y++)
+                  (v->u[v->n - 1].a[x][y])=b[x][y];
+      v->u[v->n -1].scor=*scor;
 }
 
 void doundo(undo *v, int **b, int *scor)
 {
-    if(v->n > 0)
-    {
-        (v->n)--;
-        int x, y;
-        for(x=0; x<4; x++)
-            for(y=0; y<4; y++)
-                b[x][y]=(v->u[v->n].a[x][y]);
-        *scor=v->u[v->n].scor;
-        v->u=realloc(v->u,(v->n)*sizeof(table));
-    }
+      if(v->n > 0)
+      {
+            (v->n)--;
+            int x, y;
+            for(x=0;x<4;x++)
+                  for(y=0;y<4;y++)
+                        b[x][y]=(v->u[v->n].a[x][y]);
+            *scor=v->u[v->n].scor;
+            v->u=realloc(v->u,(v->n)*sizeof(table));
+      }
 }
 
 int main()
@@ -779,18 +777,18 @@ int main()
     keypad(fereastra,TRUE);
     switch(printmenu(fereastra,resume))
     {
-    case 1:
-        goto new_game;
-        break;
-    case 2:
-        goto resume_game;
-        break;
-    case 3:
-        goto quit_game;
-        break;
-    default:
-        break;
-    }
+          case 1:
+                  goto new_game;
+                  break;
+            case 2:
+                  goto resume_game;
+                  break;
+            case 3:
+                  goto quit_game;
+                  break;
+            default:
+                  break;
+   }
     wrefresh(fereastra);
 
 new_game:
@@ -805,7 +803,7 @@ new_game:
     putere=1;
     *check=0;
     *cleared=0;
-resume_game:
+    resume_game:
     *timp=time(NULL);
     wtimeout(fereastra,500);
     afisare(a,fereastra);
@@ -817,77 +815,85 @@ resume_game:
     wrefresh(fereastra);
     while(putere)
     {
-        c=0;
+         c=0;
         *cleared=0;
         *check=0;
         n=0;
         if((c=wgetch(fereastra))==ERR && (time(NULL)-*timp)>=WAIT)
         {
-            addundo(v,a,scor);
-            n=doauto(a,scor,cleared,check);
-            *timp=time(NULL);
+             addundo(v,a,scor);
+             n=doauto(a,scor,cleared,check);
+             wclear(fereastra);
+             *timp=time(NULL);
 
-        }
+      }
         switch(c)
         {
         case 'a':
         case KEY_LEFT:
             addundo(v,a,scor);
             n=stanga(a,scor,cleared,check);
+            wclear(fereastra);
             *timp = time(NULL);
             break;
         case 'd':
         case KEY_RIGHT:
             addundo(v,a,scor);
             n=dreapta(a,scor,cleared,check);
+            wclear(fereastra);
             *timp = time(NULL);
             break;
         case 'w':
         case KEY_UP:
             addundo(v,a,scor);
             n=sus(a,scor,cleared,check);
+            wclear(fereastra);
             *timp = time(NULL);
             break;
         case 's':
         case KEY_DOWN:
             addundo(v,a,scor);
             n=jos(a,scor,cleared,check);
+            wclear(fereastra);
             *timp = time(NULL);
             break;
-        case KEY_F(5):
+      case KEY_F(5):
             quicksave(a,scor);
             *timp = time(NULL);
             break;
-        case KEY_F(9):
+      case KEY_F(9):
             quickload(fereastra,a,scor,v);
+            wclear(fereastra);
             *timp = time(NULL);
             break;
         case 'q':
             movealltomenu(fereastra);
             switch(printmenu(fereastra,resume))
             {
-            case 1:
-                goto new_game;
-                break;
-            case 2:
-                goto resume_game;
-                break;
-            case 3:
-                goto quit_game;
-                break;
-            default:
-                break;
-            }
+                  case 1:
+                          goto new_game;
+                          break;
+                    case 2:
+                          goto resume_game;
+                          break;
+                    case 3:
+                          goto quit_game;
+                          break;
+                    default:
+                          break;
+           }
             break;
         case 't':
             *timp=time(NULL);
+            wclear(fereastra);
             a[0][3]=1024;
             a[0][2]=1024;
             break;
         case 'u':
-            doundo(v,a,scor);
-            *timp = time(NULL);
-            break;
+                  doundo(v,a,scor);
+                  wclear(fereastra);
+                  *timp = time(NULL);
+                break;
         default:
             break;
         }
@@ -908,16 +914,16 @@ resume_game:
         }
         if(t==1)
         {
-            printbeforewin(fereastra);
-            afisare(a,fereastra);
-            printscoreboard(fereastra,scor);
-            printcurrenttime(fereastra);
-            printcorners(fereastra);
-            legenda(fereastra);
-            *timp=time(NULL);
-            printtimer(fereastra,timp);
-            wrefresh(fereastra);
-            usleep(1000*100);
+             printbeforewin(fereastra);
+             afisare(a,fereastra);
+             printscoreboard(fereastra,scor);
+             printcurrenttime(fereastra);
+             printcorners(fereastra);
+             legenda(fereastra);
+             *timp=time(NULL);
+             printtimer(fereastra,timp);
+             wrefresh(fereastra);
+             usleep(1000*100);
             putere=printwon(fereastra, a);
             t=2;
         }
@@ -932,38 +938,38 @@ resume_game:
         {
             switch(printover(fereastra))
             {
-            case 'q':
-                movealltomenu(fereastra);
-                putere=0;
-                break;
-            case 'u':
-                *timp=time(NULL);
-                doundo(v,a,scor);
-                break;
-            default:
-                break;
+                  case 'q':
+                  movealltomenu(fereastra);
+                        putere=0;
+                        break;
+                  case 'u':
+                        *timp=time(NULL);
+                        doundo(v,a,scor);
+                        break;
+                  default:
+                        break;
             }
-        }
-        if(putere==0)
-        {
+      }
+      if(putere==0)
+      {
             putere=1;
             switch(printmenu(fereastra,resume))
             {
-            case 1:
-                goto new_game;
-                break;
-            case 2:
-                goto resume_game;
-                break;
-            case 3:
-                goto quit_game;
-                break;
-            default:
-                break;
-            }
-        }
+                  case 1:
+                          goto new_game;
+                          break;
+                    case 2:
+                          goto resume_game;
+                          break;
+                    case 3:
+                          goto quit_game;
+                          break;
+                    default:
+                          break;
+           }
+     }
     }
-quit_game:
+    quit_game:
     afterexit(fereastra);
     wclear(fereastra);
     delwin(fereastra);
