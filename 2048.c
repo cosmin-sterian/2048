@@ -703,7 +703,6 @@ void quickload(WINDOW *fereastra, int **a, int *scor, undo *v)
             {
                   printcurrenttime(fereastra);
             }
-            //return 0;
       }
       else
       {
@@ -716,7 +715,6 @@ void quickload(WINDOW *fereastra, int **a, int *scor, undo *v)
             fclose(mem);
             v->n = 0;
             v->u=realloc(v->u,0);
-            //return 1;
       }
 }
 
