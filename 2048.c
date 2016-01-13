@@ -611,10 +611,12 @@ int printmenu(WINDOW *fereastra, int *resume)
                   {
                         case 1:
                               moveall(fereastra);
-                              sleep(1);
+                              usleep(1000*50);
                               return 1;
                               break;
                         case 2:
+                              moveall(fereastra);
+                              usleep(1000*50);
                               return 2;
                               break;
                         case 3:
@@ -851,6 +853,7 @@ new_game:
             *timp = time(NULL);
             break;
         case 'q':
+            movealltomenu(fereastra);
             switch(printmenu(fereastra,resume))
             {
                   case 1:

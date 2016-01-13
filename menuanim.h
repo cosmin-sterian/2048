@@ -108,8 +108,6 @@ void movep2(WINDOW *fereastra, int i2, int j2, int i0, int j0, int i4, int j4, i
 	int x2,y2=j2, y0=j0;
       int maxy,maxx;
       getmaxyx(fereastra,maxy,maxx);
-      //for(x2=i2;x2>=0;x2--)
-      //{
       x2=i2;
       int x4=x2+10,y4=y2,y8=j0+1;
       while(1)
@@ -149,40 +147,67 @@ void movep2(WINDOW *fereastra, int i2, int j2, int i0, int j0, int i4, int j4, i
                   y8--;
             usleep(1000*50);
       }
-      //for(y2=j2-1,y0=j0-1;!(y2<0 && y0>maxx-16);y2--,y0++)
-      //{
-      /*y2=j2-1;
-      y0=j0+1;
+}
+
+void movep2reverse(WINDOW *fereastra, int i2, int j2, int i0, int j0, int i4, int j4, int i8, int j8)
+{
+      int maxy,maxx;
+      getmaxyx(fereastra,maxy,maxx);
+	int x2,y2=0, y0=maxx-16;
+      x2=0;
+      int x4=maxy-9,y4=0,y8=maxx-16;
       while(1)
       {
-            if(y2<0 && y0>maxx-16)
+            if(x2>i2 && x4<i4 && y0<j0 && y2>j2 && y4>j4 && y8<j8)
                   break;
             wclear(fereastra);
             col2on;
-            reprintp2(fereastra,0,y2);
+            reprintp2(fereastra,x2,y2);
             col2off;
             col0on;
-            reprintp0(fereastra,0,y0);
+            reprintp0(fereastra,x2,y0);
             col0off;
-            //if(y0==(maxx-16))
-                  //y0--;
-            y2--;
-            y0++;
-            if(y2<0 && y0<=maxx-16)
-                  y2++;
-            if(y0>maxx-16 && y2>=0)
-                  y0--;
+            col4on;
+            reprintp4(fereastra,x4,y4);
+            col4off;
+            col8on;
+            reprintp8(fereastra,x4,y8);
+            col8off;
+            x2++;
+            x4--;
+            y0--;
+            y2++;
+            y4++;
+            y8--;
+            if(x2>i2 && !(x4<i4 && y0<j0 && y2>j2 && y4>j4 && y8<j8))
+                  x2--;
+            if(x4<i4 && !(x2>i2 && y0<j0 && y2>j2 && y4>j4 && y8<j8))
+                  x4++;
+            if(y0<j0 && !(x2>i2 && x4<i4 && y2>j2 && y4>j4 && y8<j8))
+                  y0++;
+            if(y2>j2 && !(x2>i2 && x4<i4 && y0<j0 && y4>j4 && y8<j8))
+                  y2--;
+            if(y4>j4 && !(x2>i2 && x4<i4 && y0<j0 && y2>j2 && y8<j8))
+                  y4--;
+            if(y8<j8 && !(x2>i2 && x4<i4 && y0<j0 && y2>j2 && y4>j4))
+                  y8++;
             usleep(1000*50);
-      }*/
+      }
 }
+
 
 void moveall(WINDOW *fereastra)
 {
       int maxy,maxx;
       getmaxyx(fereastra,maxy,maxx);
-      //col2on;
-      movep2(fereastra,(maxy-18)/2-2,(maxx-45)/2-1,(maxy-18)/2-2,(maxx-45)/2+29,(maxy-18)/2-2+10,(maxx-45)/2-1,(maxy-18)/2-2+10,(maxx-45)/2+29);
-      //col2off;
+      movep2(fereastra,(maxy-18)/2-2,(maxx-45)/2-1,(maxy-18)/2-2,(maxx-45)/2+30,(maxy-18)/2-2+10,(maxx-45)/2-1,(maxy-18)/2-2+10,(maxx-45)/2+30);
+}
+
+void movealltomenu(WINDOW *fereastra)
+{
+      int maxy,maxx;
+      getmaxyx(fereastra,maxy,maxx);
+      movep2reverse(fereastra,(maxy-18)/2-2,(maxx-45)/2-1,(maxy-18)/2-2,(maxx-45)/2+30,(maxy-18)/2-2+10,(maxx-45)/2-1,(maxy-18)/2-2+10,(maxx-45)/2+30);
 }
 
 void printcorners(WINDOW *fereastra)
@@ -212,22 +237,17 @@ void printmenu2048(WINDOW *fereastra)
       init_pair(28,COLOR_BLACK,COLOR_RED);
       init_pair(29,COLOR_BLACK,COLOR_GREEN);
       init_pair(30,COLOR_BLACK,COLOR_YELLOW);
-      //wattron(fereastra,COLOR_PAIR(27));
-      //for(i=(maxy-18)/2-1;i<(maxy-18)/2+17;i++)
-      //{
-            col2on;
-            reprintp2(fereastra,(maxy-18)/2-2,(maxx-45)/2-1);
-            col2off;
-            col0on;
-            reprintp0(fereastra,(maxy-18)/2-2,(maxx-45)/2+29);
-            col0off;
-            col4on;
-            reprintp4(fereastra,(maxy-18)/2-2+10,(maxx-45)/2-1);
-            col4off;
-            col8on;
-            reprintp8(fereastra,(maxy-18)/2-2+10,(maxx-45)/2+29);
-            col8off;
-            //sleep(1);
-      //}
-      //wattroff(fereastra,COLOR_PAIR(27));
+
+      col2on;
+      reprintp2(fereastra,(maxy-18)/2-2,(maxx-45)/2-1);
+      col2off;
+      col0on;
+      reprintp0(fereastra,(maxy-18)/2-2,(maxx-45)/2+30);
+      col0off;
+      col4on;
+      reprintp4(fereastra,(maxy-18)/2-2+10,(maxx-45)/2-1);
+      col4off;
+      col8on;
+      reprintp8(fereastra,(maxy-18)/2-2+10,(maxx-45)/2+30);
+      col8off;
 }
