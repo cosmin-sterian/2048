@@ -117,6 +117,13 @@ int stanga(int **a, int *scor, int *cleared, int *check)
     return k;
 }
 
+int len(int a)
+{
+      int x=0;
+      for(;a>0;a/=10, x++);
+      return x;
+}
+
 void afisare(int **a, WINDOW *fereastra)
 {
     //wclear(fereastra);
@@ -167,7 +174,7 @@ void afisare(int **a, WINDOW *fereastra)
                 if(a[x][y]==1<<k)
                 {
                     wattron(fereastra,COLOR_PAIR(k) | A_BOLD);
-                    mvwprintw(fereastra,(i-4)/2+x,(j-7*4)/2+7*y,"%7d",a[x][y]);
+                    mvwprintw(fereastra,(i-4)/2+x,(j-7*4)/2+7*y,"%*d%*s",4+len(a[x][y])/2,a[x][y],3-len(a[x][y])/2,"");
                     wattroff(fereastra,COLOR_PAIR(k) | A_BOLD);
                     break;
                 }
@@ -502,7 +509,7 @@ void printtimer(WINDOW *fereastra, time_t *timp)
             mvwprintw(fereastra,(maxy-4)/2,i,"*");
             mvwprintw(fereastra,(maxy-4)/2+3,i,"*");
       }
-      mvwprintw(fereastra,(maxy-4)/2+1,1,"Auto: %ds",WAIT);
+      mvwprintw(fereastra,(maxy-4)/2+1,1,"Auto: %2ds",WAIT);
       mvwprintw(fereastra,(maxy-4)/2+2,1,"Timp ramas: %2ds",WAIT-(time(NULL)-*timp));
       wrefresh(fereastra);
 }
