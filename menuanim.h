@@ -306,7 +306,7 @@ void afterexit(WINDOW *fereastra)
                   }
             }
             wrefresh(fereastra);
-            usleep(1000*100);
+            usleep(1000*70);
       }
       curs_set(TRUE);
       for(i=maxy-1;i>=0;i--)

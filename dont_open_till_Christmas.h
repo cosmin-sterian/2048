@@ -62,7 +62,7 @@ void printbeforewin(WINDOW *fereastra)
             wmove(fereastra,i+21,0);
             wclrtobot(fereastra);
             wrefresh(fereastra);
-            usleep(1000*200);
+            usleep(1000*50);
       }
       wclear(fereastra);
       reprint(fereastra, 1, 0);
@@ -86,7 +86,7 @@ void printbeforewin(WINDOW *fereastra)
             wmove(fereastra,i+21,0);
             wclrtobot(fereastra);
             wrefresh(fereastra);
-            usleep(1000*100);
+            usleep(1000*50);
       }
       wattroff(fereastra, COLOR_PAIR(25) | A_BOLD);
 }

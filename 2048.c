@@ -126,7 +126,6 @@ int len(int a)
 
 void afisare(int **a, WINDOW *fereastra)
 {
-    //wclear(fereastra);
     start_color();
     int x,y,i,j,k;
     getmaxyx(fereastra,i,j);
@@ -333,7 +332,7 @@ void printcurrenttime(WINDOW *fereastra)
       struct tm *timp_str;
       time(&timp);
       timp_str = localtime(&timp);
-      mvwprintw(fereastra,6,(maxx-strlen("00/00/2016 - 00:00:00"))/2,"%2d/%02d/%4d - %02d:%02d:%02d",timp_str->tm_mday,timp_str->tm_mon+1,timp_str->tm_year+1900,timp_str->tm_hour,timp_str->tm_min,timp_str->tm_sec);
+      mvwprintw(fereastra,6,(maxx-strlen("00/00/2016 - 00:00:00"))/2,"%02d/%02d/%4d - %02d:%02d:%02d",timp_str->tm_mday,timp_str->tm_mon+1,timp_str->tm_year+1900,timp_str->tm_hour,timp_str->tm_min,timp_str->tm_sec);
 }
 
 int printover(WINDOW *fereastra)
@@ -870,6 +869,8 @@ new_game:
             break;
       case KEY_F(9):
             quickload(fereastra,a,scor,v);
+            if(checkwon(a)==1)
+                  t=2;
             wclear(fereastra);
             *timp = time(NULL);
             break;
@@ -932,6 +933,8 @@ new_game:
              wrefresh(fereastra);
              usleep(1000*100);
             putere=printwon(fereastra, a);
+            wclear(fereastra);
+            *timp=time(NULL);
             t=2;
         }
         k=0;
@@ -983,6 +986,13 @@ new_game:
                           break;
            }
      }
+     afisare(a,fereastra);
+     printscoreboard(fereastra,scor);
+     printtimer(fereastra,timp);
+     printcurrenttime(fereastra);
+     printcorners(fereastra);
+     legenda(fereastra);
+     wrefresh(fereastra);
     }
     quit_game:
     afterexit(fereastra);
