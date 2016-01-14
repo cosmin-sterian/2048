@@ -891,7 +891,6 @@ new_game:
             break;
         case 'u':
                   doundo(v,a,scor);
-                  wclear(fereastra);
                   *timp = time(NULL);
                 break;
         default:
@@ -945,10 +944,18 @@ new_game:
                   case 'u':
                         *timp=time(NULL);
                         doundo(v,a,scor);
+                        wclear(fereastra);
                         break;
                   default:
                         break;
             }
+            afisare(a,fereastra);
+            printscoreboard(fereastra,scor);
+            printtimer(fereastra,timp);
+            printcurrenttime(fereastra);
+            printcorners(fereastra);
+            legenda(fereastra);
+            wrefresh(fereastra);
       }
       if(putere==0)
       {
