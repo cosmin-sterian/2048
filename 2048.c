@@ -899,6 +899,7 @@ new_game:
         case 'u':
                   doundo(v,a,scor);
                   *timp = time(NULL);
+                  wclear(fereastra);
                 break;
         default:
             break;
