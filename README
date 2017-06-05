@@ -1,0 +1,9 @@
+2048 puzzle game using ncurses C library
+
+Features:
+	- Undo
+	- Auto move(every 5 seconds if there is no user interaction)
+	- Quicksave
+	- Quickload
+	- Cheat(for debugging, T key to spawn two 1024 cells)
+	- Animations
